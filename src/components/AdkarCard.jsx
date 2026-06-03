@@ -63,8 +63,8 @@ function AdkarCard({ adkar }) {
         )}
 
         {/* Reference */}
-        <div className="mb-6 p-3 bg-green-50 rounded-lg border-r-4 border-green-400">
-          <p className="text-green-900 text-sm text-right">
+        <div className="mb-6 p-3 bg-blue-50 rounded-lg border-r-4 border-blue-400">
+          <p className="text-blue-900 text-sm text-right">
             <span className="font-bold">المرجع: </span>
             {adkar.reference}
           </p>
@@ -88,7 +88,7 @@ function AdkarCard({ adkar }) {
               </button>
             ) : (
               <div className="space-y-4">
-                <div className="text-5xl font-bold text-islamic-gold text-center">
+                <div className="text-5xl font-bold text-islamic-light text-center">
                   {count}/{adkar.count}
                 </div>
                 
@@ -110,7 +110,7 @@ function AdkarCard({ adkar }) {
                     className={`w-24 h-24 rounded-full font-bold text-4xl transition-all duration-300 flex items-center justify-center shadow-xl ${
                       count >= adkar.count
                         ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                        : 'bg-islamic-gold text-islamic-dark hover:bg-white hover:scale-110 active:scale-95'
+                        : 'bg-islamic-gold text-islamic-dark hover:bg-islamic-light hover:text-white hover:scale-110 active:scale-95'
                     }`}
                   >
                     ➕
@@ -128,7 +128,7 @@ function AdkarCard({ adkar }) {
 
                 {/* Completion Message */}
                 {count >= adkar.count && (
-                  <div className="text-center text-islamic-gold font-bold text-lg mt-6">
+                  <div className="text-center text-islamic-light font-bold text-lg mt-6">
                     ✅ تم إكمال العد - بارك الله فيك!
                   </div>
                 )}
