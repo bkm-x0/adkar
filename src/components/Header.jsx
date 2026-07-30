@@ -7,10 +7,10 @@ function Header() {
       <div className="container mx-auto px-4 py-8 text-center">
         <div className="flex items-center justify-center gap-3 mb-2">
           <BookOpen className="w-8 h-8 text-islamic-gold" />
-          <h1 className="text-4xl font-bold text-white">IslamHouse Explorer</h1>
+          <h1 className="text-4xl font-bold text-white">اذكاري</h1>
           <BookOpen className="w-8 h-8 text-islamic-gold" />
         </div>
-        <p className="text-islamic-accent text-lg">استعرض العناصر، التصنيفات، المؤلفين، والقرآن من API v3</p>
+        <p className="text-islamic-accent text-lg">استعرض الأذكار اليومية من ملف محلي بدون أي اتصال خارجي</p>
       </div>
     </header>
   )

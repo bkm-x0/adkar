@@ -1,10 +1,9 @@
 import React from 'react'
 import { X } from 'lucide-react'
+import JsonViewer from './JsonViewer'
 
 function DetailModal({ detail, onClose }) {
   if (!detail) return null
-
-  const content = typeof detail.data === 'string' ? detail.data : JSON.stringify(detail.data, null, 2)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
@@ -25,7 +24,7 @@ function DetailModal({ detail, onClose }) {
 
         <div className="grid gap-0 lg:grid-cols-[1fr_280px]">
           <div className="max-h-[75vh] overflow-auto p-6">
-            <pre className="whitespace-pre-wrap break-words text-xs leading-6 text-slate-200">{content}</pre>
+            <JsonViewer data={detail.data} />
           </div>
 
           <div className="border-t lg:border-t-0 lg:border-l border-white/10 bg-white/5 p-6 space-y-4 max-h-[75vh] overflow-auto">

@@ -2,12 +2,21 @@ const BASE_URL = 'https://api3.islamhouse.com/v3/paV29H2gm56kvLPy'
 
 async function requestJson(path) {
   const response = await fetch(`${BASE_URL}${path}`)
+  const bodyText = await response.text()
 
   if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`)
+    throw new Error(`Request failed with status ${response.status}${bodyText ? `: ${bodyText.slice(0, 160)}` : ''}`)
   }
 
-  return response.json()
+  if (!bodyText.trim()) {
+    return {}
+  }
+
+  try {
+    return JSON.parse(bodyText)
+  } catch {
+    return bodyText
+  }
 }
 
 export function fetchItems(page = 1, limit = 12) {
@@ -16,6 +25,10 @@ export function fetchItems(page = 1, limit = 12) {
 
 export function fetchHomeStats() {
   return requestJson('/main/home/json')
+}
+
+export function fetchAllTypes() {
+  return requestJson('/main/sitecontent/ar/ar/json')
 }
 
 export function fetchLatest(page = 1, limit = 12) {
