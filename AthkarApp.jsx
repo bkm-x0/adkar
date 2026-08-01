@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Sun, Moon, Landmark, BedDouble, RotateCcw, ArrowRight, Check } from "lucide-react";
 import adkarData from "./adkar.json";
 
@@ -142,6 +142,17 @@ export default function AthkarApp() {
   const [cat, setCat] = useState(CATEGORIES[0]?.key || "");
   const [idx, setIdx] = useState(0);
   const [count, setCount] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window === "undefined" ? 1024 : window.innerWidth
+  );
+
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const isPhone = viewportWidth < 768;
 
   const category = CATEGORIES.find((entry) => entry.key === cat) || CATEGORIES[0];
   const item = category?.items[idx];
@@ -190,7 +201,7 @@ export default function AthkarApp() {
         background: INK,
         color: IVORY,
         fontFamily: "'Inter', sans-serif",
-        padding: "40px 16px",
+        padding: isPhone ? "20px 12px" : "40px 16px",
       }}
     >
       <style>{`
@@ -211,17 +222,17 @@ export default function AthkarApp() {
         <div
           style={{
             display: "flex",
-            flexDirection: "row-reverse",
+            flexDirection: isPhone ? "column" : "row-reverse",
             alignItems: "flex-start",
-            gap: 20,
+            gap: isPhone ? 14 : 20,
           }}
         >
           <aside
             style={{
-              width: 240,
+              width: isPhone ? "100%" : 240,
               flexShrink: 0,
-              position: "sticky",
-              top: 24,
+              position: isPhone ? "static" : "sticky",
+              top: isPhone ? "auto" : 24,
             }}
           >
             <div
@@ -256,7 +267,7 @@ export default function AthkarApp() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 10,
-                  maxHeight: 320,
+                  maxHeight: isPhone ? 220 : 320,
                   overflowY: "auto",
                   paddingRight: 4,
                 }}
@@ -308,7 +319,7 @@ export default function AthkarApp() {
                 background: SURFACE,
                 border: `1px solid ${SURFACE_LINE}`,
                 borderRadius: 16,
-                padding: "40px 28px 32px",
+                padding: isPhone ? "28px 16px 24px" : "40px 28px 32px",
                 textAlign: "center",
               }}
             >
@@ -321,7 +332,7 @@ export default function AthkarApp() {
             {category.arabicLabel} · {idx + 1} of {category.items.length}
           </p>
 
-          <p dir="rtl" style={{ fontFamily: "'Amiri', serif", fontSize: 30, lineHeight: 1.9, margin: "18px 0 16px", color: IVORY, whiteSpace: "pre-wrap" }}>
+          <p dir="rtl" style={{ fontFamily: "'Amiri', serif", fontSize: isPhone ? 24 : 30, lineHeight: isPhone ? 1.8 : 1.9, margin: "18px 0 16px", color: IVORY, whiteSpace: "pre-wrap" }}>
             {item.text}
           </p>
 
@@ -366,7 +377,7 @@ export default function AthkarApp() {
 
           <BeadRing count={count} target={item.target} onTap={tap} />
 
-          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 24 }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 24, flexWrap: isPhone ? "wrap" : "nowrap" }}>
             <button
               onClick={reset}
               style={{
@@ -380,6 +391,8 @@ export default function AthkarApp() {
                 color: MUTED,
                 fontSize: 13,
                 cursor: "pointer",
+                flex: isPhone ? 1 : "0 0 auto",
+                justifyContent: "center",
               }}
             >
               <RotateCcw size={14} /> Reset
@@ -397,6 +410,8 @@ export default function AthkarApp() {
                 color: GOLD,
                 fontSize: 13,
                 cursor: "pointer",
+                flex: isPhone ? 1 : "0 0 auto",
+                justifyContent: "center",
               }}
             >
               Next <ArrowRight size={14} />
